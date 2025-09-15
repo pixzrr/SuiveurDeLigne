@@ -4,6 +4,13 @@
 	(generator_version "8.0")
 	(uuid "a3bd12c5-728a-4eac-92fb-fec69027d5e3")
 	(paper "A4")
+	(title_block
+		(title "CAO - Robot Suiveur de Ligne")
+		(company "IUT de Ville d'Avray")
+		(comment 1 "Gabriel PORTIER")
+		(comment 2 "Alexandre POPESCU")
+		(comment 3 "TP6")
+	)
 	(lib_symbols
 		(symbol "Connector_Generic:Conn_02x05_Odd_Even"
 			(pin_names
@@ -2108,6 +2115,12 @@
 		(uuid "6e5a4d16-e2d7-4bee-b153-72417a919735")
 	)
 	(junction
+		(at 100.33 107.95)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "76cdeda3-1f07-4f0e-8003-b364b6126389")
+	)
+	(junction
 		(at 190.5 57.15)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2220,6 +2233,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "f5b99326-d967-47eb-88f5-9af2a662bd04")
+	)
+	(junction
+		(at 101.6 96.52)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "f652ce7d-d091-492e-93ce-42dc47f990be")
 	)
 	(junction
 		(at 127 44.45)
@@ -2349,7 +2368,7 @@
 	)
 	(wire
 		(pts
-			(xy 95.25 96.52) (xy 105.41 96.52)
+			(xy 95.25 96.52) (xy 101.6 96.52)
 		)
 		(stroke
 			(width 0)
@@ -2396,6 +2415,16 @@
 			(type default)
 		)
 		(uuid "3c694a3b-bf57-42f7-99a3-ad870b4ec4a0")
+	)
+	(wire
+		(pts
+			(xy 100.33 107.95) (xy 105.41 107.95)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3d670106-9ae1-4651-8e88-ad6e107685f8")
 	)
 	(wire
 		(pts
@@ -2446,6 +2475,16 @@
 			(type default)
 		)
 		(uuid "43b831f6-3bcb-466f-96b5-27aed913966a")
+	)
+	(wire
+		(pts
+			(xy 101.6 96.52) (xy 105.41 96.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "475ca023-d01a-490b-9669-0bf2f0d6f7ad")
 	)
 	(wire
 		(pts
@@ -2679,7 +2718,7 @@
 	)
 	(wire
 		(pts
-			(xy 95.25 107.95) (xy 105.41 107.95)
+			(xy 95.25 107.95) (xy 100.33 107.95)
 		)
 		(stroke
 			(width 0)
@@ -3089,7 +3128,7 @@
 	)
 	(wire
 		(pts
-			(xy 105.41 93.98) (xy 105.41 96.52)
+			(xy 101.6 90.17) (xy 101.6 96.52)
 		)
 		(stroke
 			(width 0)
@@ -3179,7 +3218,7 @@
 	)
 	(wire
 		(pts
-			(xy 105.41 107.95) (xy 105.41 110.49)
+			(xy 100.33 107.95) (xy 100.33 118.11)
 		)
 		(stroke
 			(width 0)
@@ -3629,7 +3668,7 @@
 	)
 	(symbol
 		(lib_id "power:PWR_FLAG")
-		(at 105.41 110.49 180)
+		(at 100.33 118.11 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3638,7 +3677,7 @@
 		(fields_autoplaced yes)
 		(uuid "235a27ee-9456-4696-8233-7ab55d71df95")
 		(property "Reference" "#FLG02"
-			(at 105.41 112.395 0)
+			(at 100.33 120.015 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3647,7 +3686,7 @@
 			)
 		)
 		(property "Value" "PWR_FLAG"
-			(at 105.41 115.57 0)
+			(at 100.33 123.19 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3655,7 +3694,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 105.41 110.49 0)
+			(at 100.33 118.11 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3664,7 +3703,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 105.41 110.49 0)
+			(at 100.33 118.11 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3673,7 +3712,7 @@
 			)
 		)
 		(property "Description" "Special symbol for telling ERC where power comes from"
-			(at 105.41 110.49 0)
+			(at 100.33 118.11 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4983,7 +5022,7 @@
 	)
 	(symbol
 		(lib_id "power:PWR_FLAG")
-		(at 105.41 93.98 0)
+		(at 101.6 90.17 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4992,7 +5031,7 @@
 		(fields_autoplaced yes)
 		(uuid "ea4ef6cd-79a8-4369-a4e0-77e7f2786ed9")
 		(property "Reference" "#FLG01"
-			(at 105.41 92.075 0)
+			(at 101.6 88.265 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5001,7 +5040,7 @@
 			)
 		)
 		(property "Value" "PWR_FLAG"
-			(at 105.41 88.9 0)
+			(at 101.6 85.09 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5009,7 +5048,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 105.41 93.98 0)
+			(at 101.6 90.17 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5018,7 +5057,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 105.41 93.98 0)
+			(at 101.6 90.17 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5027,7 +5066,7 @@
 			)
 		)
 		(property "Description" "Special symbol for telling ERC where power comes from"
-			(at 105.41 93.98 0)
+			(at 101.6 90.17 0)
 			(effects
 				(font
 					(size 1.27 1.27)
