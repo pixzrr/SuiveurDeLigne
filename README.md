@@ -9,3 +9,6 @@
 
 ### Version 1.2 :
 <img width="1341" height="738" alt="image" src="https://github.com/user-attachments/assets/8cf470af-23a3-4253-b94f-a799e1efefe6" />
+
+### Version 2.0 :
+<img width="1288" height="696" alt="image" src="https://github.com/user-attachments/assets/bbc4f80e-c527-4669-9aec-19bf57f6c275" />
