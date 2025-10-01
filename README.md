@@ -12,3 +12,6 @@
 
 ### Version 2.0 :
 <img width="1288" height="696" alt="image" src="https://github.com/user-attachments/assets/bbc4f80e-c527-4669-9aec-19bf57f6c275" />
+
+### Version 2.1 :
+<img width="2289" height="1279" alt="image" src="https://github.com/user-attachments/assets/dcbed6ce-c7d9-44db-a85e-18a5bfce696e" />
