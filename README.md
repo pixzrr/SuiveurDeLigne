@@ -18,3 +18,6 @@
 
 ### Version 2.3/4/5/6 :
 <img width="2468" height="1395" alt="image" src="https://github.com/user-attachments/assets/8ab5c88c-e83a-4173-b08c-9691a92096b3" />
+
+### Version alt_2.6 :
+<img width="1069" height="554" alt="image" src="https://github.com/user-attachments/assets/33141551-ae5d-4cc7-9581-3690c9b906ae" />
