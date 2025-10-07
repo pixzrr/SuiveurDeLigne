@@ -21,3 +21,6 @@
 
 ### Version alt_2.6 :
 <img width="1440" height="839" alt="image" src="https://github.com/user-attachments/assets/46e7b241-eba7-4375-8a14-cd0625cad37c" />
+
+### Version 2.7 :
+<img width="2504" height="1347" alt="image" src="https://github.com/user-attachments/assets/e47e84cb-b556-46dd-a17e-0ff32068a256" />
