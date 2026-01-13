@@ -2,4 +2,8 @@
 
 ## Etape 1
 PCB : 100%
-Gravure : en attente
+Carte imprimée
+
+## Etape 2
+Soudure : 100%
+Tests : 4/9 validés (44%)
