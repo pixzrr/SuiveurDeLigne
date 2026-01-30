@@ -14,9 +14,9 @@
 #include "SonarVDA.h"
 
 //Réglages selon l'exécution souhaitée
-#define DEBEUG  0     // mettre 1 si le robot reste relié au PC (affichage CONSOLE)
+#define DEBEUG  1     // mettre 1 si le robot reste relié au PC (affichage CONSOLE)
                       // SINON 0
-#define TEST    0     // mettre à 1 pour lancer un des tests
+#define TEST    1     // mettre à 1 pour lancer un des tests
                       // SINON 0
   // Sélectionner un test :
   #define TEST_LED  0
@@ -25,7 +25,7 @@
   #define TEST_BP   0
   #define TEST_attendre_START 0
   #define TEST_attendre_START_en_boucle 0
-  #define TEST_IR   0
+  #define TEST_IR   1
   #define TEST_SONAR 0
   #define TEST_MOTEURS 0
 

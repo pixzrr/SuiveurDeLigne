@@ -67,20 +67,40 @@ void test_attendre_START_en_boucle(void){
 // Noir = 0, Blanc = 1
 void test_capteurs_IR_logique(void) {
   Serial.println("Capteur1(D1):  Capteur2(AN3): Capteur3(AN2):  Capteur4(AN1):  Capteur5(AN0):  Capteur6(D0):");
+  bool choix = 0;
   while(1) {
-  Serial.print(digitalRead(PIN_IR1));
-  Serial.print("    ");
-  Serial.print(digitalRead(PIN_IR2));
-  Serial.print("    ");
-  Serial.print(digitalRead(PIN_IR3));
-  Serial.print("    ");
-  Serial.print(digitalRead(PIN_IR4));
-  Serial.print("    ");
-  Serial.print(digitalRead(PIN_IR5));
-  Serial.print("    ");
-  Serial.println(digitalRead(PIN_IR6));
-  
-  delay(1000);
+    while (choix == 0) {
+      if (digitalRead(PIN_BP) == 1) choix = 1;
+      Serial.print(digitalRead(PIN_IR1));
+      Serial.print("    ");
+      Serial.print(digitalRead(PIN_IR2));
+      Serial.print("    ");
+      Serial.print(digitalRead(PIN_IR3));
+      Serial.print("    ");
+      Serial.print(digitalRead(PIN_IR4));
+      Serial.print("    ");
+      Serial.print(digitalRead(PIN_IR5));
+      Serial.print("    ");
+      Serial.println(digitalRead(PIN_IR6));
+
+      delay(1000);
+    }
+    while (choix == 1) {
+      if (digitalRead(PIN_BP) == 1) choix = 0;
+      Serial.print(analogRead(PIN_IR1));
+      Serial.print("    ");
+      Serial.print(analogRead(PIN_IR2));
+      Serial.print("    ");
+      Serial.print(analogRead(PIN_IR3));
+      Serial.print("    ");
+      Serial.print(analogRead(PIN_IR4));
+      Serial.print("    ");
+      Serial.print(analogRead(PIN_IR5));
+      Serial.print("    ");
+      Serial.println(analogRead(PIN_IR6));
+
+      delay(1000);
+    }
   }
 }
 
