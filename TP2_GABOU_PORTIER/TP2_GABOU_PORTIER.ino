@@ -69,32 +69,8 @@ void loop() {
   analogWrite(PIN_M_GAUCHE_R, 0);
   analogWrite(PIN_M_DROIT_A, RAPIDE);
   analogWrite(PIN_M_DROIT_R, 0);
-    
-    // test suivre une ligne droite (noir = 0, blanc = 1)
-    if (digitalRead(PIN_IR3) == 1) {
-      analogWrite(PIN_M_GAUCHE_A, 0);
-      analogWrite(PIN_M_GAUCHE_R, 0);
-      analogWrite(PIN_M_DROIT_A, RAPIDE);
-      analogWrite(PIN_M_DROIT_R, 0);
-    }
-    if (digitalRead(PIN_IR4) == 1) {
-      analogWrite(PIN_M_GAUCHE_A, RAPIDE);
-      analogWrite(PIN_M_GAUCHE_R, 0);
-      analogWrite(PIN_M_DROIT_A, 0);
-      analogWrite(PIN_M_DROIT_R, 0);
-    }
 
-    // test suivre une courbure
-    if (digitalRead(PIN_IR5) == 0) {
-      analogWrite(PIN_M_GAUCHE_A, 0);
-      analogWrite(PIN_M_GAUCHE_R, RAPIDE);
-      analogWrite(PIN_M_DROIT_A, RAPIDE);
-    }
-    if (digitalRead(PIN_IR2) == 0) {
-      analogWrite(PIN_M_DROIT_A, 0);
-      analogWrite(PIN_M_DROIT_R, RAPIDE);
-      analogWrite(PIN_M_GAUCHE_A, RAPIDE);
-    }
+  void suivre_courbure();
 
     // Si tout est blanc, on s'arrête
     if (PIN_IR2 == 1 && PIN_IR3 == 1 && PIN_IR4 == 1 && PIN_IR5 == 1) {

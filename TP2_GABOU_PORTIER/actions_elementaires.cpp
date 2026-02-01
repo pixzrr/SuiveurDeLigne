@@ -23,12 +23,3 @@ void affiche_tention_batterie(void){
   Serial.println(t9v6);
   
 }
-
-void suivre_courbure(void) {
-  int vitesseIR2, vitesseIR5; // on s'en fou du float, on est pas à ça près
-  float rapport = 7.97;
-  vitesseIR2 = analogRead(PIN_IR2)/rapport;
-  vitesseIR5 = analogRead(PIN_IR2)/rapport;
-
-  analogWrite(PIN_M_GAUCHE_A
-}

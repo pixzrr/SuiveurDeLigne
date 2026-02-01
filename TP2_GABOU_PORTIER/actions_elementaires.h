@@ -7,7 +7,6 @@
   //Prototypes des fonctions 
   void attendre_START(void);
   void affiche_tention_batterie(void);
-  void suivre_courbure(void)
    //.......
 
 #endif
