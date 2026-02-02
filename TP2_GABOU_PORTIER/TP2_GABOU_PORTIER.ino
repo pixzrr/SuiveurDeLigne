@@ -14,9 +14,9 @@
 #include "SonarVDA.h"
 
 //Réglages selon l'exécution souhaitée
-#define DEBEUG  1     // mettre 1 si le robot reste relié au PC (affichage CONSOLE)
+#define DEBEUG  0     // mettre 1 si le robot reste relié au PC (affichage CONSOLE)
                       // SINON 0
-#define TEST    1     // mettre à 1 pour lancer un des tests
+#define TEST    0     // mettre à 1 pour lancer un des tests
                       // SINON 0
   // Sélectionner un test :
   #define TEST_LED  0
@@ -25,7 +25,7 @@
   #define TEST_BP   0
   #define TEST_attendre_START 0
   #define TEST_attendre_START_en_boucle 0
-  #define TEST_IR   1
+  #define TEST_IR   0
   #define TEST_SONAR 0
   #define TEST_MOTEURS 0
 
@@ -65,12 +65,14 @@ void loop() {
     verif_boutton_start = 1;
   }
 
-  analogWrite(PIN_M_GAUCHE_A, RAPIDE);
-  analogWrite(PIN_M_GAUCHE_R, 0);
-  analogWrite(PIN_M_DROIT_A, RAPIDE);
-  analogWrite(PIN_M_DROIT_R, 0);
-
-  void suivre_courbure();
+  if (digitalRead(PIN_IR2) == 0 && digitalRead(PIN_IR5) == 0 && digitalRead(PIN_IR1) == 1 && digitalRead(PIN_IR6) == 1) {
+     analogWrite(PIN_M_GAUCHE_A, 255);
+     analogWrite(PIN_M_GAUCHE_R, 0);
+     analogWrite(PIN_M_DROIT_A, 255);
+     analogWrite(PIN_M_DROIT_R, 0);
+  } else {
+    suivre_courbure();
+  }
 
     // Si tout est blanc, on s'arrête
     if (PIN_IR2 == 1 && PIN_IR3 == 1 && PIN_IR4 == 1 && PIN_IR5 == 1) {

@@ -4,6 +4,6 @@
   #include <Arduino.h>
   #include "connexions_robot_arduino_uno.h"
   
-void suivre_courbure(void)
+void suivre_courbure(void);
 
 #endif

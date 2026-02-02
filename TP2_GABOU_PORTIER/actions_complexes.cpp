@@ -21,8 +21,28 @@ void suivre_courbure(void) {
     AvancerIR5 = 0;
     ReculerIR5 = -vitesseIR5;
    }
-   analogWrite(PIN_M_GAUCHE_A, AvancerIR2);
-   analogWrite(PIN_M_GAUCHE_R, ReculerIR2);
-   analogWrite(PIN_M_DROIT_A, AvancerIR5);
-   analogWrite(PIN_M_DROIT_R, ReculerIR5);
+   if (vitesseIR2 > 255) { 
+     analogWrite(PIN_M_GAUCHE_A, 255);
+     analogWrite(PIN_M_GAUCHE_R, ReculerIR2);
+     analogWrite(PIN_M_DROIT_A, AvancerIR5);
+     analogWrite(PIN_M_DROIT_R, ReculerIR5);
+   }
+   if (vitesseIR2 < -255) { 
+     analogWrite(PIN_M_GAUCHE_A, AvancerIR2);
+     analogWrite(PIN_M_GAUCHE_R, 255);
+     analogWrite(PIN_M_DROIT_A, AvancerIR5);
+     analogWrite(PIN_M_DROIT_R, ReculerIR5);
+   }
+   if (vitesseIR5 > 255) { 
+     analogWrite(PIN_M_GAUCHE_A, AvancerIR2);
+     analogWrite(PIN_M_GAUCHE_R, ReculerIR2);
+     analogWrite(PIN_M_DROIT_A, 255);
+     analogWrite(PIN_M_DROIT_R, ReculerIR5);
+   }
+   if (vitesseIR5 < -255) { 
+     analogWrite(PIN_M_GAUCHE_A, AvancerIR2);
+     analogWrite(PIN_M_GAUCHE_R, ReculerIR2);
+     analogWrite(PIN_M_DROIT_A, AvancerIR5);
+     analogWrite(PIN_M_DROIT_R, 255);
+   }
 }
