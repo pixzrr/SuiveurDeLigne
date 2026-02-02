@@ -14,5 +14,7 @@ Tests : 8/9 validés (89%)
 ## Etape 3 : Programmation
 
 Création des fonctions tests : terminé
+
 Programmation en logique binaire (principe de sur-correction constante) : terminée
+
 Programmation en logique analogique (s'adapter parfaitement à la courbe en fonction des nuances de gris) : en cours
