@@ -34,15 +34,8 @@ void suivre_courbure(void) {
     mDroitIR5_R = -vitesseIR5;
    }
 
-   if (erreur == 0) {
-     analogWrite(PIN_M_GAUCHE_A, 255);
-     analogWrite(PIN_M_GAUCHE_R, 0);
-     analogWrite(PIN_M_DROIT_A, 255);
-     analogWrite(PIN_M_DROIT_R, 0);
-   } else {
-     analogWrite(PIN_M_GAUCHE_A, mGaucheIR2_A);
-     analogWrite(PIN_M_GAUCHE_R, mGaucheIR2_R);
-     analogWrite(PIN_M_DROIT_A, mDroitIR5_A);
-     analogWrite(PIN_M_DROIT_R, mDroitIR5_R);
-   }
+   analogWrite(PIN_M_GAUCHE_A, mGaucheIR2_A);
+   analogWrite(PIN_M_GAUCHE_R, mGaucheIR2_R);
+   analogWrite(PIN_M_DROIT_A, mDroitIR5_A);
+   analogWrite(PIN_M_DROIT_R, mDroitIR5_R);
 }
