@@ -6,11 +6,11 @@ void attendre_START(void){
   do{
     buttonState = digitalRead(PIN_BP);
   }while(buttonState != 0);
-  Serial.println("En attente...");
+  Serial.println("En attente de l'appui...");
   do{
     buttonState = digitalRead(PIN_BP);
   }while(buttonState != 1);
-  Serial.println("Début");
+  Serial.println("Bouton appuyé");
 }
 
 void affiche_tention_batterie(void){

@@ -14,14 +14,14 @@
 #include "SonarVDA.h"
 
 //Réglages selon l'exécution souhaitée
-#define DEBEUG  0     // mettre 1 si le robot reste relié au PC (affichage CONSOLE)
+#define DEBEUG  1     // mettre 1 si le robot reste relié au PC (affichage CONSOLE)
                       // SINON 0
-#define TEST    0     // mettre à 1 pour lancer un des tests
+#define TEST    1     // mettre à 1 pour lancer un des tests
                       // SINON 0
   // Sélectionner un test :
   #define TEST_LED  0
   #define TEST_UART 0
-  #define TEST_BATTERIE 0
+  #define TEST_BATTERIE 1
   #define TEST_BP   0
   #define TEST_attendre_START 0
   #define TEST_attendre_START_en_boucle 0
@@ -62,16 +62,21 @@ void loop() {
   // Vérifier boutton start
   if (verif_boutton_start == 0) {
     attendre_START();
+    while (digitalRead(PIN_BP) == 1) {} // attendre que le bouton soit relaché pour éviter de gacher la fonction d'arret
     verif_boutton_start = 1;
   }
-
+    
   suivre_courbure();
 
-    // Si tout est blanc, on s'arrête
-    if (PIN_IR2 == 1 && PIN_IR3 == 1 && PIN_IR4 == 1 && PIN_IR5 == 1) {
-      attendre_START();
+    // Si tout est blanc, on s'arrête par précaution  ou  Si l'utilisateur appuie sur le boutton encore une fois, le robot s'arrête
+    if ((digitalRead(PIN_IR2) == 1 && digitalRead(PIN_IR3) == 1 && digitalRead(PIN_IR4) == 1 && digitalRead(PIN_IR5) == 1) || digitalRead(PIN_BP) == 1 && verif_boutton_start == 1) {
+      analogWrite(PIN_M_GAUCHE_A, 0);
+      analogWrite(PIN_M_GAUCHE_R, 0);
+      analogWrite(PIN_M_DROIT_A, 0);
+      analogWrite(PIN_M_DROIT_R, 0);
+      while (digitalRead(PIN_BP) == 1) {} // attendre que le bouton soit relaché
+      verif_boutton_start = 0;
     }
-    
 }
 
 // Lancement de fonctions de tests 
