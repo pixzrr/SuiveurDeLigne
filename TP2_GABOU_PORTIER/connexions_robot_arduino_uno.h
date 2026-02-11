@@ -23,12 +23,12 @@
   // Capteurs IR (gauche à droite, vue derrière le robot) carte donnée
   
   
-  #define PIN_IR1 7
+  #define PIN_IR1 4
   #define PIN_IR2 A0
   #define PIN_IR3 A1
   #define PIN_IR4 A2
   #define PIN_IR5 A3
-  #define PIN_IR6 4
+  #define PIN_IR6 7
   
 
   // Capteurs IR (gauche à droite, vue derrière le robot) carte créée
