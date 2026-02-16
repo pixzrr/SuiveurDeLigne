@@ -2,14 +2,19 @@
 
 void suivre_courbure(void) {
   int mGaucheIR2_A, mGaucheIR2_R, mDroitIR5_A, mDroitIR5_R;
+
+  int Vmin = 70;
+  int Vmax = 850;
+  float a = 510.0 / (Vmax-Vmin);
+  float b = -255.0-(a*Vmin);
   
-  float vitesseIR2 = analogRead(PIN_IR2)*0.56-294.2; // 400/900 : -663 ; 350/850 : -612 ; 300/800 : -561 ; a=1.02             écart de 700 : a=51/70=0.73 ; 200/900 : -400
-  float vitesseIR5 = analogRead(PIN_IR5)*0.56-294.2; // 200/800 : écart de 600 : a=2.85, b=-425 ; 300/900 : b=      min : 75 max : 900/950    (a=34/55, b=301.36 ou -3315/11)
+  float vitesseIR2 = analogRead(PIN_IR2)*a-b; // a=0.56 ; b=294.2 ||| a=0.62 ; b=-298.4  ||| a=0.654 ; b=-301
+  float vitesseIR5 = analogRead(PIN_IR5)*a-b; // a=0.6 ; b=-297
   
-  int erreur = vitesseIR2 - vitesseIR5; // Si <0, il faut tourner à gauche, si = 0, tout droit, si >0 doit tourner à droite
+  int erreur = vitesseIR5 - vitesseIR2; // Si <0, il faut tourner à gauche, si = 0, tout droit, si >0 doit tourner à droite
 
   vitesseIR2 = 255 - erreur*0.5; // car 255 - (-255) = 510, et on veut 255 max, donc on fait un prduit en croix : 255/510 = 0,5
-  vitesseIR5 = 255 + erreur*0.5; // pareil ici, si on a 255+255 ça marche pas
+  vitesseIR5 = 255 + erreur*0.5;
 
   // Bloquer les valeurs entre -255 et 255
   if (vitesseIR2 < -255) vitesseIR2 = -255;

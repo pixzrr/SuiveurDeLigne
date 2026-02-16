@@ -14,19 +14,19 @@
 #include "SonarVDA.h"
 
 //Réglages selon l'exécution souhaitée
-#define DEBEUG  1     // mettre 1 si le robot reste relié au PC (affichage CONSOLE)
+#define DEBEUG  0     // mettre 1 si le robot reste relié au PC (affichage CONSOLE)
                       // SINON 0
-#define TEST    1     // mettre à 1 pour lancer un des tests
+#define TEST    0     // mettre à 1 pour lancer un des tests
                       // SINON 0
   // Sélectionner un test :
   #define TEST_LED  0
   #define TEST_UART 0
-  #define TEST_BATTERIE 1
+  #define TEST_BATTERIE 0
   #define TEST_BP   0
   #define TEST_attendre_START 0
   #define TEST_attendre_START_en_boucle 0
   #define TEST_IR   0
-  #define TEST_SONAR 0
+  #define TEST_SONAR 1
   #define TEST_MOTEURS 0
 
 //Paramètres de réglages
@@ -52,12 +52,18 @@ void setup() {
   if(DEBEUG){Serial.begin(9600);}// initialize serial communication at 9600 bits per second:
   init_pin();
   if(TEST){test();}
+
+  // Setup sonar
+  sonar.set_trigger(SEUIL_PRESENT, SEUIL_ABSENT, obstacle_present, obstacle_absent); 
+  sonar.start();
 }
 
 // the loop routine runs over and over again forever:
 void loop() {  
   // Variables setup
   static bool verif_boutton_start = 0;
+  // Setup sonar
+  sonar.set_trigger(SEUIL_PRESENT, SEUIL_ABSENT, obstacle_present, obstacle_absent); 
   
   // Vérifier boutton start
   if (verif_boutton_start == 0) {
@@ -65,9 +71,18 @@ void loop() {
     while (digitalRead(PIN_BP) == 1) {} // attendre que le bouton soit relaché pour éviter de gacher la fonction d'arret
     verif_boutton_start = 1;
   }
-    
+
   suivre_courbure();
-  stop_sign_360();
+
+  // Test Sonar
+
+  if (digitalRead(PIN_IR1) == 0 && digitalRead(PIN_IR2) == 0 && digitalRead(PIN_IR3) == 0 && digitalRead(PIN_IR4) == 0 && digitalRead(PIN_IR5) == 0 && digitalRead(PIN_IR6) == 0 && obstacle_proche == true) {
+    analogWrite(PIN_M_GAUCHE_A, 0);
+    analogWrite(PIN_M_GAUCHE_R, 0);
+    analogWrite(PIN_M_DROIT_A, 0);
+    analogWrite(PIN_M_DROIT_R, 0);
+    while (obstacle_proche == true) {}
+  }
 
     // Si tout est blanc, on s'arrête par précaution  ou  Si l'utilisateur appuie sur le boutton encore une fois, le robot s'arrête
     if ((digitalRead(PIN_IR2) == 1 && digitalRead(PIN_IR3) == 1 && digitalRead(PIN_IR4) == 1 && digitalRead(PIN_IR5) == 1) || digitalRead(PIN_BP) == 1 && verif_boutton_start == 1) {
