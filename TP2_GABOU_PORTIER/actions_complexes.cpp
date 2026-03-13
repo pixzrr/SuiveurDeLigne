@@ -50,7 +50,7 @@ void suivre_courbure(void) {
 
 
 
-void stop_sign_360(void) {
+void stop_sign_360v1(void) {
   int compteur_lignes_IR6 = 0;
   int compteur_lignes_IR1 = 0;
   if (digitalRead(PIN_IR6) == 0 && digitalRead(PIN_IR1) == 1 && digitalRead(PIN_IR2) == 1) {
@@ -77,6 +77,59 @@ void stop_sign_360(void) {
     }
   }
 }
+
+
+int stop_360(void) {
+
+  int compteur_lignes_IR6 = 0;
+  int compteur_lignes_IR1 = 0;
+  
+  if (digitalRead(PIN_IR6) == 0 && digitalRead(PIN_IR1) == 1 && digitalRead(PIN_IR5) == 0 && digitalRead(PIN_IR3) == 0) {
+    delay(20); // Ajuster le délai (en gros les deux if() imbriqués c'est juste dire au robot "attends d'avoir confirmation que c'es bien la ligne)
+    if (digitalRead(PIN_IR6) == 0 && digitalRead(PIN_IR1) == 1 && digitalRead(PIN_IR5) == 0 && digitalRead(PIN_IR3) == 0) {
+      while (compteur_lignes_IR1 < 1 ) {
+        
+        digitalWrite(PIN_LED, LOW);
+        
+        while (digitalRead(PIN_IR1) == 1) {
+          analogWrite(PIN_M_GAUCHE_A, 0);
+          analogWrite(PIN_M_GAUCHE_R, 255);
+          analogWrite(PIN_M_DROIT_A, 255);
+          analogWrite(PIN_M_DROIT_R, 0);
+        }
+        
+
+        while (digitalRead(PIN_IR1) == 0) {
+          analogWrite(PIN_M_GAUCHE_A, 0);
+          analogWrite(PIN_M_GAUCHE_R, 255);
+          analogWrite(PIN_M_DROIT_A, 255);
+          analogWrite(PIN_M_DROIT_R, 0);
+        }
+
+        
+        digitalWrite(PIN_LED, HIGH);
+        compteur_lignes_IR1++;
+      }
+      
+      digitalWrite(PIN_LED, LOW);
+
+      while (digitalRead(PIN_IR1) == 1) {
+          analogWrite(PIN_M_GAUCHE_A, 0);
+          analogWrite(PIN_M_GAUCHE_R, 255);
+          analogWrite(PIN_M_DROIT_A, 255);
+          analogWrite(PIN_M_DROIT_R, 0);
+        }
+      
+      while (digitalRead(PIN_IR1) == 0) {
+      suivre_courbure();
+      }
+    }
+  }
+  return 1;
+}
+
+
+
 
 void raccourci(void) {
   if (digitalRead(PIN_IR6) == 1 && digitalRead(PIN_IR1) == 0 && digitalRead(PIN_IR5) == 1) {

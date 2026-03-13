@@ -5,6 +5,7 @@
   #include "connexions_robot_arduino_uno.h"
   
 void suivre_courbure(void);
-void stop_sign_360(void);
+void stop_sign_360v1(void);
+int stop_360(void);
 
 #endif
