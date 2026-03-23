@@ -6,6 +6,7 @@
   
 void suivre_courbure(void);
 void stop_sign_360v1(void);
-int stop_360(void);
+void stop_360(void);
+void raccourci(void);
 
 #endif

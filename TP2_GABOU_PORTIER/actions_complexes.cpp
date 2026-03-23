@@ -79,14 +79,14 @@ void stop_sign_360v1(void) {
 }
 
 
-int stop_360(void) {
+void stop_360(void) {
 
   int compteur_lignes_IR6 = 0;
   int compteur_lignes_IR1 = 0;
   
-  if (digitalRead(PIN_IR6) == 0 && digitalRead(PIN_IR1) == 1 && digitalRead(PIN_IR5) == 0 && digitalRead(PIN_IR3) == 0) {
+  if (digitalRead(PIN_IR6) == 0 && digitalRead(PIN_IR1) == 1 && digitalRead(PIN_IR5) == 0 && digitalRead(PIN_IR4) == 0 && digitalRead(PIN_IR3) == 1 && digitalRead(PIN_IR2) == 1) { // on test tous les capteurs car parfois quand le robot tourne la ligne touche les capteurs les plus éloignés
     delay(20); // Ajuster le délai (en gros les deux if() imbriqués c'est juste dire au robot "attends d'avoir confirmation que c'es bien la ligne)
-    if (digitalRead(PIN_IR6) == 0 && digitalRead(PIN_IR1) == 1 && digitalRead(PIN_IR5) == 0 && digitalRead(PIN_IR3) == 0) {
+    if (digitalRead(PIN_IR6) == 0 && digitalRead(PIN_IR1) == 1 && digitalRead(PIN_IR5) == 0 && digitalRead(PIN_IR4) == 0 && digitalRead(PIN_IR3) == 1 && digitalRead(PIN_IR2) == 1) {
       while (compteur_lignes_IR1 < 1 ) {
         
         digitalWrite(PIN_LED, LOW);
@@ -125,16 +125,45 @@ int stop_360(void) {
       }
     }
   }
-  return 1;
 }
 
 
 
 
 void raccourci(void) {
-  if (digitalRead(PIN_IR6) == 1 && digitalRead(PIN_IR1) == 0 && digitalRead(PIN_IR5) == 1) {
-    delay(15);
-    if (digitalRead(PIN_IR6) == 1 && digitalRead(PIN_IR1) == 0 && digitalRead(PIN_IR5) == 1) {
+  if (digitalRead(PIN_IR6) == 1 && digitalRead(PIN_IR1) == 0 && digitalRead(PIN_IR5) == 1 && digitalRead(PIN_IR4) == 1 && digitalRead(PIN_IR3) == 0 && digitalRead(PIN_IR2) == 0) {
+    delay(20);
+    if (digitalRead(PIN_IR6) == 1 && digitalRead(PIN_IR1) == 0 && digitalRead(PIN_IR5) == 1 && digitalRead(PIN_IR4) == 1 && digitalRead(PIN_IR3) == 0 && digitalRead(PIN_IR2) == 0) {
+      while (digitalRead(PIN_IR6) == 1 && digitalRead(PIN_IR5) == 1) suivre_courbure(); // etape 1 : on sort du panneau d'indication
+      while (digitalRead(PIN_IR6) == 0 && digitalRead(PIN_IR5)) suivre_courbure(); // etape 2 : on attend de voir le raccourci
+
+      while (digitalRead(PIN_IR1) != 0 || digitalRead(PIN_IR2) != 0 || digitalRead(PIN_IR3) != 0 || digitalRead(PIN_IR4) != 0 || digitalRead(PIN_IR5) != 0 || digitalRead(PIN_IR6) != 0) { // etape 3 : on tourne jusqu'à ce qu'on soit parfaitement perpendiculaire à la piste principale
+          analogWrite(PIN_M_GAUCHE_A, 0);
+          analogWrite(PIN_M_GAUCHE_R, 255);
+          analogWrite(PIN_M_DROIT_A, 255);
+          analogWrite(PIN_M_DROIT_R, 0);
+        }
+        
+      while (digitalRead(PIN_IR1) == 0 && digitalRead(PIN_IR2) == 0 && digitalRead(PIN_IR5) == 0 && digitalRead(PIN_IR6) == 0) { // etape 4 : on avance tout droit tant qu'on est pas calibé sur le raccourci
+          analogWrite(PIN_M_GAUCHE_A, 255);
+          analogWrite(PIN_M_GAUCHE_R, 0);
+          analogWrite(PIN_M_DROIT_A, 255);
+          analogWrite(PIN_M_DROIT_R, 0);
+      }
+
+      while (digitalRead(PIN_IR4) == 0 && digitalRead(PIN_IR5) == 0 && digitalRead(PIN_IR6) == 0) { // etape 5 : tant que les capteurs de droite ne sont pas égaux à 1,c'est qu'on a pas fini de tourner
+          analogWrite(PIN_M_GAUCHE_A, 0);
+          analogWrite(PIN_M_GAUCHE_R, 255);
+          analogWrite(PIN_M_DROIT_A, 255);
+          analogWrite(PIN_M_DROIT_R, 0);  
+      }
+
+      while (digitalRead(PIN_IR1) == 0 && digitalRead(PIN_IR2) == 0 && digitalRead(PIN_IR3) == 0) { // etape 6 : on avance tout droit tant que les capteurs de gauche sont égaux à 0 (détectent encore du noir)
+          analogWrite(PIN_M_GAUCHE_A, 255);
+          analogWrite(PIN_M_GAUCHE_R, 0);
+          analogWrite(PIN_M_DROIT_A, 255);
+          analogWrite(PIN_M_DROIT_R, 0);  
+      }
     }
   }
 }

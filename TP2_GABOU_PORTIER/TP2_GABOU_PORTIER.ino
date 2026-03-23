@@ -89,6 +89,8 @@ void loop() {
 
 
   suivre_courbure();
+  stop_360();
+  raccourci();
 
   // Test Sonar
 
@@ -99,15 +101,7 @@ void loop() {
     analogWrite(PIN_M_DROIT_R, 0);
     while (obstacle_proche == true) {}
   }
-
-
-  if (stop_360_autorise == 1) {
-    if (stop_360() == 1) {
-    dernier_stop_360 = millis();
-    stop_360_autorise = 0;
-    }
-  }
-  if (temps - dernier_stop_360 <= temps - 5000) stop_360_autorise = 1;
+    
 
     // Si tout est blanc, on s'arrête par précaution  ou  Si l'utilisateur appuie sur le boutton encore une fois, le robot s'arrête
     if ((digitalRead(PIN_IR2) == 1 && digitalRead(PIN_IR3) == 1 && digitalRead(PIN_IR4) == 1 && digitalRead(PIN_IR5) == 1) || digitalRead(PIN_BP) == 1 && verif_boutton_start == 1) {
