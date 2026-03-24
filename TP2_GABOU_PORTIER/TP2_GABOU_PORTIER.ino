@@ -30,8 +30,8 @@
   #define TEST_MOTEURS 0
 
 //Paramètres de réglages
-#define SEUIL_PRESENT 10  // distance en cm en dessous de laquelle un objet sera détecté
-#define SEUIL_ABSENT  20  // distance en cm au dessus de laquelle un objet sera plus détecté
+#define SEUIL_PRESENT 30  // distance en cm en dessous de laquelle un objet sera détecté
+#define SEUIL_ABSENT  40  // distance en cm au dessus de laquelle un objet sera plus détecté
 
 //Variables globales 
 SonarVDA sonar; //Céation d'un objet "sonar" de classe "SonarVDA"
@@ -68,7 +68,6 @@ void loop() {
   sonar.set_trigger(SEUIL_PRESENT, SEUIL_ABSENT, obstacle_present, obstacle_absent);
 
   // Setup 360
-  static unsigned long temps = millis();
   static unsigned long dernier_stop_360 = 0; // car millis renvoit un unsigned long
   static bool stop_360_autorise = 1;
 
