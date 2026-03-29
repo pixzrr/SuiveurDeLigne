@@ -33,6 +33,13 @@
 #define SEUIL_PRESENT 30  // distance en cm en dessous de laquelle un objet sera détecté
 #define SEUIL_ABSENT  40  // distance en cm au dessus de laquelle un objet sera plus détecté
 
+// Gestion des modes
+#define MODE_NORMAL 0
+#define MODE_360 1
+#define MODE_RACCOURCI 2
+
+int mode = MODE_NORMAL; // Variable globale de gestion des modes
+
 //Variables globales 
 SonarVDA sonar; //Céation d'un objet "sonar" de classe "SonarVDA"
 volatile bool obstacle_proche = false; //variable faisant le lien avec les fonction d'interruption
@@ -92,12 +99,11 @@ void loop() {
 
 
 
-  if (digitalRead(PIN_IR1) == 1 && digitalRead(PIN_IR6) ==1) suivre_courbure();
-  
-  stop_360();
-  
-  raccourci_etats();
+  if (mode ==  MODE_NORMAL) suivre_courbure();
 
+  if (mode != MODE_360)raccourci_etats(); // En vrai ça sert à rien vu que MODE_360 sera jamais vrai
+  
+  if (mode != MODE_RACCOURCI) stop_360();
 
 
 

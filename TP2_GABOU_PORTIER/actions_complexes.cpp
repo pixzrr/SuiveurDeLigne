@@ -123,6 +123,7 @@ void stop_360(void) {
       while (digitalRead(PIN_IR1) == 0) {
       suivre_courbure();
       }
+      mode = MODE_NORMAL;
     }
   }
 }
@@ -174,6 +175,7 @@ void raccourci(void) {
           analogWrite(PIN_M_DROIT_A, 255);
           analogWrite(PIN_M_DROIT_R, 0);
       }
+      mode = MODE_NORMAL;
     }
   }
 }
@@ -183,15 +185,22 @@ void raccourci(void) {
 
 void raccourci_etats(void) { // Version de la fonction raccourci avec une machine à états
 
-  static int etape = 0;
+  static int etape = -1;
   
-  if (digitalRead(PIN_IR6) == 1 && analogRead(PIN_IR1) <= 120 && digitalRead(PIN_IR5) == 1 && analogRead(PIN_IR2) <= 120) {
+  if (digitalRead(PIN_IR6) == 1 && analogRead(PIN_IR1) <= 120 && digitalRead(PIN_IR5) == 1 && analogRead(PIN_IR2) <= 120 && etape == -1) {
     digitalWrite(PIN_LED, HIGH);
     delay(20);
-    if (digitalRead(PIN_IR6) == 1 && analogRead(PIN_IR1) <= 120 && digitalRead(PIN_IR5) == 1 && analogRead(PIN_IR2) <= 120) {
+    if (digitalRead(PIN_IR6) == 1 && analogRead(PIN_IR1) <= 120 && digitalRead(PIN_IR5) == 1 && analogRead(PIN_IR2) <= 120 && etape == -1) {
+      etape = 0;
+      mode = MODE_RACCOURCI;
+    }
+  }
 
 
       switch (etape) {
+        case -1:
+          break;
+          
         case 0:
           suivre_courbure();
           if (digitalRead(PIN_IR1) == 1 && digitalRead(PIN_IR2) == 1) etape = 1;
@@ -204,7 +213,10 @@ void raccourci_etats(void) { // Version de la fonction raccourci avec une machin
 
         case 2:
           suivre_courbure();
-          if (digitalRead(PIN_IR1) == 1 && digitalRead(PIN_IR2) == 1) etape = 3;
+          if (digitalRead(PIN_IR1) == 1 && digitalRead(PIN_IR2) == 1) {
+            delay(350);
+            etape = 3;
+          }
           break;
 
         case 3:
@@ -233,7 +245,8 @@ void raccourci_etats(void) { // Version de la fonction raccourci avec une machin
           analogWrite(PIN_M_GAUCHE_R, 255);
           analogWrite(PIN_M_DROIT_A, 255);
           analogWrite(PIN_M_DROIT_R, 0);
-          if (digitalRead(PIN_IR5) == 0) etape = 7;
+          if (digitalRead(PIN_IR5) == 0) etape = -1;
+          mode = MODE_NORMAL;
           break;
 
       default:
@@ -241,11 +254,7 @@ void raccourci_etats(void) { // Version de la fonction raccourci avec une machin
           analogWrite(PIN_M_GAUCHE_R, 0);
           analogWrite(PIN_M_DROIT_A, 0);
           analogWrite(PIN_M_DROIT_R, 0);
-          etape = 0;
+          etape = -1;
           break;
       }
-
-
-    }
-  }
 }
