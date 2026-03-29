@@ -67,16 +67,9 @@ void loop() {
   // Setup sonar
   sonar.set_trigger(SEUIL_PRESENT, SEUIL_ABSENT, obstacle_present, obstacle_absent);
 
-  // Setup 360
-  static unsigned long dernier_stop_360 = 0; // car millis renvoit un unsigned long
-  static bool stop_360_autorise = 1;
-
-
-
-
 
   
-  // Vérifier boutton start
+  // ----------- Vérifier boutton start -----------
   if (verif_boutton_start == 0) {
     attendre_START();
     while (digitalRead(PIN_BP) == 1) {} // attendre que le bouton soit relaché pour éviter de gacher la fonction d'arret
@@ -87,11 +80,7 @@ void loop() {
 
 
 
-  suivre_courbure();
-  stop_360();
-  raccourci();
-
-  // Test Sonar
+  // ----------- Test Sonar -----------
 
   if (digitalRead(PIN_IR1) == 0 && digitalRead(PIN_IR2) == 0 && digitalRead(PIN_IR3) == 0 && digitalRead(PIN_IR4) == 0 && digitalRead(PIN_IR5) == 0 && digitalRead(PIN_IR6) == 0 && obstacle_proche == true) {
     analogWrite(PIN_M_GAUCHE_A, 0);
@@ -100,9 +89,24 @@ void loop() {
     analogWrite(PIN_M_DROIT_R, 0);
     while (obstacle_proche == true) {}
   }
+
+
+
+  if (digitalRead(PIN_IR1) == 1 && digitalRead(PIN_IR6) ==1) suivre_courbure();
+  
+  stop_360();
+  
+  raccourci_etats();
+
+
+
+
     
 
-    // Si tout est blanc, on s'arrête par précaution  ou  Si l'utilisateur appuie sur le boutton encore une fois, le robot s'arrête
+
+
+  //  ----------- Si tout est blanc, on s'arrête par précaution  ou  Si l'utilisateur appuie sur le boutton encore une fois, le robot s'arrête -----------
+    
     if ((digitalRead(PIN_IR2) == 1 && digitalRead(PIN_IR3) == 1 && digitalRead(PIN_IR4) == 1 && digitalRead(PIN_IR5) == 1) || digitalRead(PIN_BP) == 1 && verif_boutton_start == 1) {
       analogWrite(PIN_M_GAUCHE_A, 0);
       analogWrite(PIN_M_GAUCHE_R, 0);

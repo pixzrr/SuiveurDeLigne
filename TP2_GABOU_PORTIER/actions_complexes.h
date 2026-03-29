@@ -8,5 +8,6 @@ void suivre_courbure(void);
 void stop_sign_360v1(void);
 void stop_360(void);
 void raccourci(void);
+void raccourci_etats(void);
 
 #endif

@@ -135,39 +135,117 @@ void raccourci(void) {
     digitalWrite(PIN_LED, HIGH);
     delay(20);
     if (digitalRead(PIN_IR6) == 1 && analogRead(PIN_IR1) <= 120 && digitalRead(PIN_IR5) == 1 && analogRead(PIN_IR2) <= 120) {
+      
       while (digitalRead(PIN_IR1) == 0 && digitalRead(PIN_IR2) == 0) suivre_courbure(); // etape 1 : on sort du panneau d'indication
+      
       while (digitalRead(PIN_IR1) == 1 && digitalRead(PIN_IR2) == 1) suivre_courbure(); // etape 2 : on attend de voir le raccourci
+
+      while (digitalRead(PIN_IR1) == 0 && digitalRead(PIN_IR2) == 0) { // etape 3 : On dépasse un peu au niveau du raccourci avec les capteurs pour que le moteur soit un minumum aligné à la piste
+        analogWrite(PIN_M_GAUCHE_A, 255);
+        analogWrite(PIN_M_GAUCHE_R, 0);
+        analogWrite(PIN_M_DROIT_A, 255);
+        analogWrite(PIN_M_DROIT_R, 0);
+      }
+      delay(500); // On ajoute un delay pour que les roues soient un minimum alignées à la piste
 
 
       
 
-      while (digitalRead(PIN_IR4) != 0) { // etape 3 : on tourne jusqu'à ce qu'on soit parfaitement perpendiculaire à la piste principale
+      while (digitalRead(PIN_IR2) != 0) { // etape 4 : on tourne jusqu'à ce qu'on voit le raccourci
           analogWrite(PIN_M_GAUCHE_A, 0);
           analogWrite(PIN_M_GAUCHE_R, 255);
           analogWrite(PIN_M_DROIT_A, 255);
           analogWrite(PIN_M_DROIT_R, 0);
         }
-        
-      while (digitalRead(PIN_IR1) == 0 && digitalRead(PIN_IR2) == 0 && digitalRead(PIN_IR5) == 0 && digitalRead(PIN_IR6) == 0) { // etape 4 : on avance tout droit tant qu'on est pas calibé sur le raccourci
+
+      while (digitalRead(PIN_IR1) == 1 && digitalRead(PIN_IR6) == 1) suivre_courbure(); // etape 5 : On suit le raccourci jusqu'à voir la fin
+
+      while (digitalRead(PIN_IR1) == 0 && digitalRead(PIN_IR6) == 0) { // etape 6 : On dépasse un peu pour la même raison qu'au dessus
+        analogWrite(PIN_M_GAUCHE_A, 255);
+        analogWrite(PIN_M_GAUCHE_R, 0);
+        analogWrite(PIN_M_DROIT_A, 255);
+        analogWrite(PIN_M_DROIT_R, 0);
+      }
+      delay(500); // On ajoute un delay pour que les roues soient un minimum alignées à la piste
+
+      while (digitalRead(PIN_IR5) != 0) { // etape 7 : on tourne jusqu'à ce qu'on voit la piste
+          analogWrite(PIN_M_GAUCHE_A, 0);
+          analogWrite(PIN_M_GAUCHE_R, 255);
+          analogWrite(PIN_M_DROIT_A, 255);
+          analogWrite(PIN_M_DROIT_R, 0);
+      }
+    }
+  }
+}
+
+
+
+
+void raccourci_etats(void) { // Version de la fonction raccourci avec une machine à états
+
+  static int etape = 0;
+  
+  if (digitalRead(PIN_IR6) == 1 && analogRead(PIN_IR1) <= 120 && digitalRead(PIN_IR5) == 1 && analogRead(PIN_IR2) <= 120) {
+    digitalWrite(PIN_LED, HIGH);
+    delay(20);
+    if (digitalRead(PIN_IR6) == 1 && analogRead(PIN_IR1) <= 120 && digitalRead(PIN_IR5) == 1 && analogRead(PIN_IR2) <= 120) {
+
+
+      switch (etape) {
+        case 0:
+          suivre_courbure();
+          if (digitalRead(PIN_IR1) == 1 && digitalRead(PIN_IR2) == 1) etape = 1;
+          break;
+
+        case 1:
+          suivre_courbure();
+          if (digitalRead(PIN_IR1) == 0 && digitalRead(PIN_IR2) == 0) etape = 2;
+          break;
+
+        case 2:
+          suivre_courbure();
+          if (digitalRead(PIN_IR1) == 1 && digitalRead(PIN_IR2) == 1) etape = 3;
+          break;
+
+        case 3:
+          analogWrite(PIN_M_GAUCHE_A, 0);
+          analogWrite(PIN_M_GAUCHE_R, 255);
+          analogWrite(PIN_M_DROIT_A, 255);
+          analogWrite(PIN_M_DROIT_R, 0);
+          if (digitalRead(PIN_IR2) != 0) etape = 4;
+          break;
+
+        case 4:
+          suivre_courbure();
+          if (digitalRead(PIN_IR1) == 0 && digitalRead(PIN_IR6) == 0) etape = 5;
+          break;
+
+        case 5:
           analogWrite(PIN_M_GAUCHE_A, 255);
           analogWrite(PIN_M_GAUCHE_R, 0);
           analogWrite(PIN_M_DROIT_A, 255);
           analogWrite(PIN_M_DROIT_R, 0);
-      }
+          if (digitalRead(PIN_IR1) == 1 && digitalRead(PIN_IR6) == 1) etape = 6;
+          break;
 
-      while (digitalRead(PIN_IR4) == 0 && digitalRead(PIN_IR5) == 0 && digitalRead(PIN_IR6) == 0) { // etape 5 : tant que les capteurs de droite ne sont pas égaux à 1,c'est qu'on a pas fini de tourner
+        case 6:
           analogWrite(PIN_M_GAUCHE_A, 0);
           analogWrite(PIN_M_GAUCHE_R, 255);
           analogWrite(PIN_M_DROIT_A, 255);
-          analogWrite(PIN_M_DROIT_R, 0);  
+          analogWrite(PIN_M_DROIT_R, 0);
+          if (digitalRead(PIN_IR5) == 0) etape = 7;
+          break;
+
+      default:
+          analogWrite(PIN_M_GAUCHE_A, 0);
+          analogWrite(PIN_M_GAUCHE_R, 0);
+          analogWrite(PIN_M_DROIT_A, 0);
+          analogWrite(PIN_M_DROIT_R, 0);
+          etape = 0;
+          break;
       }
 
-      while (digitalRead(PIN_IR1) == 0 && digitalRead(PIN_IR2) == 0 && digitalRead(PIN_IR3) == 0) { // etape 6 : on avance tout droit tant que les capteurs de gauche sont égaux à 0 (détectent encore du noir)
-          analogWrite(PIN_M_GAUCHE_A, 255);
-          analogWrite(PIN_M_GAUCHE_R, 0);
-          analogWrite(PIN_M_DROIT_A, 255);
-          analogWrite(PIN_M_DROIT_R, 0);  
-      }
+
     }
   }
 }
