@@ -30,15 +30,10 @@
   #define TEST_MOTEURS 0
 
 //Paramètres de réglages
-#define SEUIL_PRESENT 30  // distance en cm en dessous de laquelle un objet sera détecté
-#define SEUIL_ABSENT  40  // distance en cm au dessus de laquelle un objet sera plus détecté
+#define SEUIL_PRESENT 20  // distance en cm en dessous de laquelle un objet sera détecté
+#define SEUIL_ABSENT  30  // distance en cm au dessus de laquelle un objet sera plus détecté
 
-// Gestion des modes
-#define MODE_NORMAL 0
-#define MODE_360 1
-#define MODE_RACCOURCI 2
-
-int mode = MODE_NORMAL; // Variable globale de gestion des modes
+int mode = MODE_NORMAL;
 
 //Variables globales 
 SonarVDA sonar; //Céation d'un objet "sonar" de classe "SonarVDA"
@@ -89,7 +84,7 @@ void loop() {
 
   // ----------- Test Sonar -----------
 
-  if (digitalRead(PIN_IR1) == 0 && digitalRead(PIN_IR2) == 0 && digitalRead(PIN_IR3) == 0 && digitalRead(PIN_IR4) == 0 && digitalRead(PIN_IR5) == 0 && digitalRead(PIN_IR6) == 0 && obstacle_proche == true) {
+  if (obstacle_proche == true) {
     analogWrite(PIN_M_GAUCHE_A, 0);
     analogWrite(PIN_M_GAUCHE_R, 0);
     analogWrite(PIN_M_DROIT_A, 0);
@@ -101,7 +96,7 @@ void loop() {
 
   if (mode ==  MODE_NORMAL) suivre_courbure();
 
-  if (mode != MODE_360)raccourci_etats(); // En vrai ça sert à rien vu que MODE_360 sera jamais vrai
+  raccourci();
   
   if (mode != MODE_RACCOURCI) stop_360();
 
