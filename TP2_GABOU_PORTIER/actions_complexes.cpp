@@ -133,7 +133,6 @@ void stop_360(void) {
 
 void raccourci(void) {
   static int etape = -1;
-  int compteur_IR5 = 0;
 
   if (digitalRead(PIN_IR6) == 1 && digitalRead(PIN_IR5) == 1 && analogRead(PIN_IR2) <= 120 && etape == -1) {
     digitalWrite(PIN_LED, HIGH);
@@ -157,12 +156,13 @@ void raccourci(void) {
       
       if (digitalRead(PIN_IR2) == 0) {
         while (digitalRead(PIN_IR2) == 0) {}
+        while (digitalRead(PIN_IR2) == 1) suivre_courbure();
+        delay(150);
         analogWrite(PIN_M_GAUCHE_A, 0);
-        analogWrite(PIN_M_GAUCHE_R, 0);
+        analogWrite(PIN_M_GAUCHE_R, 155);
         analogWrite(PIN_M_DROIT_A, 255);
         analogWrite(PIN_M_DROIT_R, 0);
-        delay(350);
-        compteur_IR5 = 0;
+        while (digitalRead(PIN_IR2) == 1) {}
         etape = 1;
       }
       break;
@@ -171,12 +171,12 @@ void raccourci(void) {
       suivre_courbure();
       if (digitalRead(PIN_IR5) == 0 && digitalRead(PIN_IR2) == 0) {
         while (digitalRead(PIN_IR2) == 0) {}
-        delay(200);
+        delay(150);
         analogWrite(PIN_M_GAUCHE_A, 0);
         analogWrite(PIN_M_GAUCHE_R, 255);
         analogWrite(PIN_M_DROIT_A, 255);
         analogWrite(PIN_M_DROIT_R, 0);
-        delay(350);
+        while (digitalRead(PIN_IR5) == 1) {}
         etape = 2;
       }
       break;
