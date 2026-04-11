@@ -1,4 +1,10 @@
 #include "fonctions_test.h"
+
+// ********************************************************************************************************************************************* //
+// ********* Section 1 : Test du Bouton Poussoir / LED en boucle  ****************************************************************************** //
+// ********************************************************************************************************************************************* //
+
+// ──────────── Partie 1 : Test de Bouton Poussoir / LED en boucle ───────────────────── //
   
 void test_led_en_boucle(void){
   while(1){
@@ -8,6 +14,8 @@ void test_led_en_boucle(void){
     delay(PERIODE_BLINK/2);                      // wait in ms
   }
 }
+
+// ──────────── Partie 2 : Test liaison UART ────────────────────────────────── //
 
 //Fonction de test de la liaison série UART entre la carte Arduino et le PC
 void test_uart_en_boucle(void){
@@ -21,7 +29,8 @@ void test_uart_en_boucle(void){
   }
 }
 
-//Fonction de....................
+// ──────────── Partie 3 : Test Bp en boucle ────────────────────────────────── //
+
 void test_bouton_poussoir_en_boucle(void){
   Serial.println("Test lecture BP");
   delay(2000);
@@ -48,7 +57,8 @@ while (1) {
   } 
 }
 
-//Fonction de..........
+// ──────────── Partie 4 : Test attendre START en boucle ─────────────────────────── //
+
 void test_attendre_START_en_boucle(void){
   Serial.println("Test attendre START");  
   unsigned char i=0;
@@ -62,10 +72,23 @@ void test_attendre_START_en_boucle(void){
   }
 }
 
-//Fonction de..........
+// ********************************************************************************************************************************************* //
+
+
+
+
+
+
+
+
+// ********************************************************************************************************************************************* //
+// ********* Section 2 : Capteurs IR, Moteurs et Sonar  **************************************************************************************** //
+// ********************************************************************************************************************************************* //
+
+// ──────────── Partie 1 : Test des capteurs IR ───────────────────────────────── //
 
 // Noir = 0, Blanc = 1
-void test_capteurs_IR_logique(void) {
+void test_capteurs_IR(void) {
   Serial.println("Capteur1(D1):  Capteur2(AN3): Capteur3(AN2):  Capteur4(AN1):  Capteur5(AN0):  Capteur6(D0):");
   bool choix = 0;
   while(1) {
@@ -103,6 +126,8 @@ void test_capteurs_IR_logique(void) {
     }
   }
 }
+
+// ──────────── Partie 2 : Test des moteurs ─────────────────────────────────── //
 
 void test_moteurs(void) {
   while (1) {
@@ -152,6 +177,7 @@ void test_moteurs(void) {
   }
 }
 
+// ──────────── Partie 3 : Test du sonar ──────────────────────────────────── //
 
 //Fonction de test de la détection d'obstacle
 //Cette fonction appelle les fonctions : obstacle_present() et obstacle_absent()
@@ -162,13 +188,15 @@ void test_sonar_en_boucle(SonarVDA sonar, int nb_cm_min, int nb_cm_max, void (*u
 	 //Si l'objet n'est plus détecté au dela de SEUIL_ABSENT cm alors la fonction "obj_absent()" est appelée
   sonar.start(); // On démarre les mesures d'obstacle
   while(1){
-    Serial.println(sonar.get_last_measure());//on affiche la dernière mesure faite par le sonar
+    Serial.println(sonar.get_last_measure());   //on affiche la dernière mesure faite par le sonar
     delay(1000);//pause d'1 seconde
-    if(digitalRead(PIN_BP)==1) { //Test de l'arrêt et de la remise en route du sonar
-        sonar.stop();
+    if(digitalRead(PIN_BP)==1) {                //Test de l'arrêt et de la remise en route du sonar (Si bouton appuyé, on arrête le sonar
+        sonar.stop();                           // On arrête le sonar
         do{;
-        }while(digitalRead(PIN_BP)==1);
-        sonar.start();
+        }while(digitalRead(PIN_BP)==1);         // On attend que le bouton soit relâché
+        sonar.start();                          // on relance le sonar
     }
   }
 }
+
+// ********************************************************************************************************************************************* //

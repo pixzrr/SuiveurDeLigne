@@ -16,7 +16,7 @@
   void test_bouton_poussoir_en_boucle(void);
   void test_attendre_START_en_boucle(void);
   void test_sonar_en_boucle(SonarVDA sonar, int nb_cm_min, int nb_cm_max, void (*userFunc)(void), void (*userFunc2)(void));
-  void test_capteurs_IR_logique(void);
+  void test_capteurs_IR(void);
   void test_moteurs(void);
 
 #endif

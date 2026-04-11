@@ -16,36 +16,30 @@
 
   #include <Arduino.h>
 
+// ──────────── Partie 1 : LED, BP, Batterie ───────────────────── //
+
   #define PIN_LED 13 // LED
   #define PIN_BP 12 //Bouton poussoir
   #define PIN_TENSION_REDUITE_BATTERIE A4 // Tension réduite batterie
 
-  // Capteurs IR (gauche à droite, vue derrière le robot) carte donnée
-  
-  
+  #define PIN_BATT A123456 //Image de la tension de la Batterie
+
+// ──────────── Partie 2 : Capteurs IR ──────────────────────── //
+
+  // Capteurs IR de gauche à droite, vue derrière le robot
   #define PIN_IR1 4
   #define PIN_IR2 A3
   #define PIN_IR3 A2
   #define PIN_IR4 A1
   #define PIN_IR5 A0
   #define PIN_IR6 7
-  
 
-  // Capteurs IR (gauche à droite, vue derrière le robot) carte créée
-  /*
-  #define PIN_IR1 4
-  #define PIN_IR2 A2
-  #define PIN_IR3 A3
-  #define PIN_IR4 A0
-  #define PIN_IR5 A1
-  #define PIN_IR6 7
-  */
-  
+// ──────────── Partie 3 : Moteurs ────────────────────────── //
 
-  // Moteurs
     // Moteur droit
   #define PIN_M_DROIT_A 5
   #define PIN_M_DROIT_R 6
+  
     //Moteur gauche
   #define PIN_M_GAUCHE_A 3
   #define PIN_M_GAUCHE_R 11
@@ -56,9 +50,8 @@
     // Rapide
     #define LENT 180
 
-  #define PIN_D0 7   //Capteur IR lisible en logique
-  #define PIN_D1 4
-  #define PIN_BATT A123456 //Image de la tension de la Batterie
+
+
 
   void init_pin(void);
 
